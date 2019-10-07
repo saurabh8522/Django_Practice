@@ -5,11 +5,12 @@ from django.views.generic import (View,TemplateView,
                                 UpdateView)
 from django.http import HttpResponse
 from . import models
+from django.urls import reverse_lazy
 # Create your views here.
 # def index(request):
 #     return render(request,'index.html')
 class SchoolListView(ListView):
-    
+
     model = models.School
 
 
@@ -27,7 +28,18 @@ class IndexView(TemplateView):
         context['injectme'] = "Basic Injection!"
         return context
 
+class SchoolCreateView(CreateView):
+    fields = ("name","principal","location")
+    model = models.School
 
+
+class SchoolUpdateView(UpdateView):
+    fields = ("name","principal")
+    model = models.School
+
+class SchoolDeleteView(DeleteView):
+    model = models.School
+    success_url = reverse_lazy("basic_app:list")
 
 
 
